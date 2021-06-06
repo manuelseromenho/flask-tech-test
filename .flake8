@@ -1,0 +1,4 @@
+[flake8]
+application-import-names=techtest
+import-order-style=google
+ignore = D413

@@ -3,6 +3,7 @@ from flask import abort, jsonify, request
 from techtest.baseapp import app
 from techtest.connector import db_session_wrap
 from techtest.models.article import Article
+from techtest.models.author import Author
 from techtest.models.region import Region
 
 
@@ -20,6 +21,20 @@ def add_regions_to_article(article, region_ids, session):
     article.regions = regions
 
 
+@db_session_wrap
+def add_authors_to_article(article, authors_ids, session):
+    author_query = session.query(
+        Author,
+    ).filter(
+        Author.id.in_(authors_ids),
+    )
+    authors = author_query.all()
+    if len(authors_ids) != len(authors):
+        raise Exception('One or more authors don\'t exist')
+
+    article.authors += authors
+
+
 @app.route('/articles', methods=['GET'])
 @db_session_wrap
 def get_articles(session):
@@ -28,9 +43,8 @@ def get_articles(session):
     ).order_by(
         Article.id
     )
-    return jsonify([
-        article.asdict(follow=['regions']) for article in query.all()
-    ])
+    print("OLA 10")
+    return jsonify([article.asdict(follow=['regions', 'authors']) for article in query.all()])
 
 
 @app.route('/articles', methods=['POST'])
@@ -46,7 +60,13 @@ def create_article(session):
             session=session,
         )
 
-    return jsonify(article.asdict(follow=['regions']))
+    if 'authors' in request_data:
+        add_authors_to_article(
+            article, [x['id'] for x in request_data['authors']],
+            session=session,
+        )
+
+    return jsonify(article.asdict(follow=['regions', 'authors']))
 
 
 @app.route('/articles/<int:article_id>', methods=['GET'])

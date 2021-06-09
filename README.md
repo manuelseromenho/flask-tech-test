@@ -5,44 +5,14 @@
 This project uses python3. A pip requirements.txt file is included to install the dependencies (SQLAlchemy, Dictalchemy, Flask)
 
 ## Running with Docker
-- A sample Dockerfile is provided that will run the application in an isolated environment
+- A sample Dockerfile and docker-compose.yml are provided that will run the application in an isolated environment
 
 - Make sure you have `docker` installed and that the Docker daemon is running
+- Make sure you have `docker-compose` installed and running
 
-- Build the image: `docker build -t flask-tech-test .`
-
-- Run the image: `docker run -it -p 5000:5000 <image_id>`
+- Build the image/run container with docker-compose: `docker-compose up`
 
 - Start making some requests: `curl http://localhost:5000/articles`
-
-## Running with a virtual environment
-- To run the application in a virtual Python environment, follow these instructions. This example will create a virtual Python environment for 3.4.8
-
-- Check you have the pynv version you need:
-pyenv versions
-
-- You should see 3.4.8
-
-- If you do not have the correct version of Python, install it like this:
-pyenv install 3.4.8
-
-- On command line do this:
-~/.pyenv/versions/3.4.8/bin/python -m venv env
-
-
-- This creates a folder called env. Then do this to activate the virtual environment:
-source env/bin/activate
-
-- Lastly do this to check that you are now on the correct Python version:
-python --version
-
-To check we are on the right Python version
-
-- You can install the dependencies with `pip install -r requirements.txt`
-
-- You should run `python setup_and_seed.py` to get a local database setup and seeded with lookup data
-
-- You can then run the app with `flask run` or `python app.py` in the root directory
 
 ## Project Structure Notes
 

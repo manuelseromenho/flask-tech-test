@@ -13,7 +13,6 @@ def get_authors(session):
     ).order_by(
         Author.id
     )
-    print("OLAÀAAAA ZÈHH")
     return jsonify([author.asdict() for author in query.all()])
 
 

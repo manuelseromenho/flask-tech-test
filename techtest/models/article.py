@@ -46,9 +46,11 @@ class Article(BaseModel):
     regions = relationship(
         'Region',
         secondary=_article_region_table,
+        order_by='Region.id'
     )
 
     authors = relationship(
         'Author',
         secondary=_article_author_table,
+        order_by='Author.id'
     )

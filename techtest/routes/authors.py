@@ -67,6 +67,3 @@ def delete_author(author_id, session):
     session.delete(author)
 
     return jsonify(author.asdict())
-
-
-

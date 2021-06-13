@@ -27,7 +27,6 @@ def generate_str_authors_already_exist(authors_input_intersection):
     return str_authors_already_exist
 
 
-
 @db_session_wrap
 def set_article_regions(article, region_ids, session):
     region_ids_without_duplicates = list(set(region_ids))
